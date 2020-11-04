@@ -163,8 +163,9 @@ class AirVisualCard extends HTMLElement {
       const airvisualSensorList = [aqiSensor, aplSensor, mainPollutantSensor];
       // const unitOfMeasurement = hass.states[aqiSensor.config].attributes['unit_of_measurement'] || 'AQI';
       const unitOfMeasurement = hass.states[aqiSensor.config] ? hass.states[aqiSensor.config].attributes['unit_of_measurement'] : 'AQI';
-      const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
-      
+//       const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
+      const pollutantUnit = 'µg/m³';
+            
       const faceIcon = {
         '1': 'mdi:emoticon-excited',
         '2': 'mdi:emoticon-happy',
