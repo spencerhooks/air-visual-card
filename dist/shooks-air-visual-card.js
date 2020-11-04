@@ -336,4 +336,4 @@ class AirVisualCard extends HTMLElement {
     }
 }
   
-customElements.define('air-visual-card', AirVisualCard);
+customElements.define('shooks-air-visual-card', AirVisualCard);
