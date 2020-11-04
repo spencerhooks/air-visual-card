@@ -158,12 +158,12 @@ class AirVisualCard extends HTMLElement {
       // value is used as a string instead of integer in order for 
       const aqiSensor = { name: 'aqiSensor', config: config.air_quality_index || null, value: 0 };
       const aplSensor = { name: 'aplSensor', config: config.air_pollution_level || null, value: 0 };
-      const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 9 };
+//       const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 0 };
+      const mainPollutantSensor = 'PM2.5';
       const airvisualSensorList = [aqiSensor, aplSensor, mainPollutantSensor];
       // const unitOfMeasurement = hass.states[aqiSensor.config].attributes['unit_of_measurement'] || 'AQI';
       const unitOfMeasurement = hass.states[aqiSensor.config] ? hass.states[aqiSensor.config].attributes['unit_of_measurement'] : 'AQI';
-//       const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
-      const pollutantUnit = 'hello';
+      const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
       
       const faceIcon = {
         '1': 'mdi:emoticon-excited',
@@ -282,7 +282,7 @@ class AirVisualCard extends HTMLElement {
             ${aplSensor.value}
             <br>
             <div class="mainPollutantSensor" id="mainPollutantSensor">
-              ${mainPollutantSensor.value} | ${pollutantUnit}
+              ${mainPollutantSensor} | ${pollutantUnit}
             </div>
           </div>
         </div> 
