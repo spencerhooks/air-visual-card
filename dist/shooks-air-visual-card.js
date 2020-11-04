@@ -158,7 +158,7 @@ class AirVisualCard extends HTMLElement {
       // value is used as a string instead of integer in order for 
       const aqiSensor = { name: 'aqiSensor', config: config.air_quality_index || null, value: 0 };
       const aplSensor = { name: 'aplSensor', config: config.air_pollution_level || null, value: 0 };
-      const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 'PM2.5' };
+      const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 9 };
       const airvisualSensorList = [aqiSensor, aplSensor, mainPollutantSensor];
       // const unitOfMeasurement = hass.states[aqiSensor.config].attributes['unit_of_measurement'] || 'AQI';
       const unitOfMeasurement = hass.states[aqiSensor.config] ? hass.states[aqiSensor.config].attributes['unit_of_measurement'] : 'AQI';
