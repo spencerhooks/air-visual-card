@@ -1,7 +1,8 @@
 
+
 // UPDATE FOR EACH RELEASE!!! From aftership-card. Version # is hard-coded for now.
 console.info(
-  `%c  AIR-VISUAL-CARD  \n%c  Version 0.0.11   `,
+  `%c  SHOOKS-AIR-VISUAL-CARD  \n%c  Version 0.0.11   `,
   'color: orange; font-weight: bold; background: black',
   'color: white; font-weight: bold; background: dimgray',
 );
@@ -68,6 +69,7 @@ class AirVisualCard extends HTMLElement {
         .temp {
           grid-column-start: 3;
           grid-column-end: 4;
+          background-color: #FFFFFF;
           text-align: right;
           font-size: 1.7em;
           font-weight: 300;
@@ -158,14 +160,20 @@ class AirVisualCard extends HTMLElement {
       // value is used as a string instead of integer in order for 
       const aqiSensor = { name: 'aqiSensor', config: config.air_quality_index || null, value: 0 };
       const aplSensor = { name: 'aplSensor', config: config.air_pollution_level || null, value: 0 };
-//       const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 0 };
-      const mainPollutantSensor = 'PM2.5';
+      const mainPollutantSensor = { name: 'mainPollutantSensor', config: config.main_pollutant || null, value: 0 };
       const airvisualSensorList = [aqiSensor, aplSensor, mainPollutantSensor];
-      // const unitOfMeasurement = hass.states[aqiSensor.config].attributes['unit_of_measurement'] || 'AQI';
       const unitOfMeasurement = hass.states[aqiSensor.config] ? hass.states[aqiSensor.config].attributes['unit_of_measurement'] : 'AQI';
-//       const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
-      const pollutantUnit = 'µg/m³';
-            
+      const pollutantUnit = hass.states[mainPollutantSensor.config] ? hass.states[mainPollutantSensor.config].attributes['pollutant_unit'] : 'µg/m³';
+
+      // Array used to locally calculate the polution level (rather than relying on AirVisual, since we're using local sensors)
+      const newSensor = {
+        '1': 'Good',
+        '2': 'Moderate',
+        '3': 'Unhealthy for Sensistive Groups',
+        '4': 'Unhealthy',
+        '5': 'Very Unhealthy',
+        '6': 'Hazardous'
+      }
       const faceIcon = {
         '1': 'mdi:emoticon-excited',
         '2': 'mdi:emoticon-happy',
@@ -173,7 +181,7 @@ class AirVisualCard extends HTMLElement {
         '4': 'mdi:emoticon-sad',
         '5': 'mdi:emoticon-poop',
         '6': 'mdi:emoticon-dead'
-      };
+      }
       const AQIbgColor = {
         '1': `#A8E05F`,
         '2': '#FDD74B',
@@ -271,6 +279,7 @@ class AirVisualCard extends HTMLElement {
         `;
       }
 
+      // Updated to hardcode the mainPollutantSensor data
       card_content += `
           <div class="face" id="face" style="background-color: ${AQIfaceColor[getAQI()]};">
             <img src="${iconDirectory}/ic-face-${getAQI()}.svg"></img>
@@ -280,10 +289,10 @@ class AirVisualCard extends HTMLElement {
             ${country} ${unitOfMeasurement}
           </div>
           <div class="aplSensor" id="aplSensor" style="background-color: ${AQIbgColor[getAQI()]}; color: ${AQIfontColor[getAQI()]}">
-            ${aplSensor.value}
+            ${newSensor[getAQI()]}
             <br>
             <div class="mainPollutantSensor" id="mainPollutantSensor">
-              ${mainPollutantSensor} | ${pollutantUnit}
+              PM2.5 | µg/m³
             </div>
           </div>
         </div> 
